@@ -14,9 +14,9 @@
                 <div class="project">
                     <a href="<?php the_permalink(); ?>">
                         <?php if (has_post_thumbnail()) : ?>
-                            <?php the_post_thumbnail('large', ['class' => 'project-thumb']); ?>
+                            <?php the_post_thumbnail('portfolio-archive', ['class' => 'project-thumb', 'loading' => 'lazy']); ?>
                         <?php else : ?>
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/placeholder.jpg" alt="<?php the_title(); ?>" class="project-thumb">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/placeholder.jpg" alt="<?php the_title(); ?>" class="project-thumb" loading="lazy">
                         <?php endif; ?>
                         <div class="project-overlay">
                             <span class="project-category">Project</span>
