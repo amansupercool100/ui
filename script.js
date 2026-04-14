@@ -111,37 +111,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ─── Testimonial Slider ───────────────────────────────────────
-    const track = document.getElementById('testimonialTrack');
-    const dots = document.querySelectorAll('.testimonial-dot');
-    const testimonials = document.querySelectorAll('.testimonial');
+const track = document.getElementById('testimonialTrack');
+const dots = document.querySelectorAll('.testimonial-dot');
+const testimonials = document.querySelectorAll('.testimonial');
+const prevBtn = document.getElementById('testimonialPrev');
+const nextBtn = document.getElementById('testimonialNext');
 
-    if (track && testimonials.length > 0) {
-        let currentIndex = 0;
+if (track && testimonials.length > 0) {
+    let currentIndex = 0;
 
-        function updateSlider(index) {
-            testimonials.forEach(t => t.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
+    function updateSlider(index) {
+        // Wrap around
+        if (index < 0) index = testimonials.length - 1;
+        if (index >= testimonials.length) index = 0;
 
-            const offset = index * -100;
-            track.style.transform = `translateX(${offset}%)`;
+        testimonials.forEach(t => t.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
 
-            testimonials[index].classList.add('active');
-            if(dots[index]) dots[index].classList.add('active');
-            currentIndex = index;
-        }
+        const offset = index * -100;
+        track.style.transform = `translateX(${offset}%)`;
 
-        dots.forEach(dot => {
-            dot.addEventListener('click', function() {
-                updateSlider(parseInt(this.getAttribute('data-index')));
-            });
-        });
-
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % testimonials.length;
-            updateSlider(currentIndex);
-        }, 5000);
+        testimonials[index].classList.add('active');
+        if (dots[index]) dots[index].classList.add('active');
+        currentIndex = index;
     }
 
+    // Dot navigation
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            updateSlider(parseInt(this.getAttribute('data-index')));
+        });
+    });
+
+    // Arrow buttons
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => updateSlider(currentIndex - 1));
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => updateSlider(currentIndex + 1));
+    }
+
+    // Auto-advance
+    setInterval(() => {
+        updateSlider(currentIndex + 1);
+    }, 5000);
+}
     // ─── Portfolio Single Carousel (if present) ────────────────────
     const mainImg = document.getElementById('carouselMainImage');
     if (mainImg && typeof portfolioImages !== 'undefined') {
