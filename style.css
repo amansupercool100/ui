@@ -1313,3 +1313,16 @@ Version: 4.0
         right: 10px;
     }
 }
+/* ===== Accessibility & Optimizations ===== */
+
+/* Keyboard focus outline */
+*:focus-visible {
+    outline: 2px solid var(--color-brown);
+    outline-offset: 4px;
+}
+
+/* Touch device class (added by JS) */
+.touch-device .cursor,
+.touch-device .cursor-follower {
+    display: none !important;
+}
